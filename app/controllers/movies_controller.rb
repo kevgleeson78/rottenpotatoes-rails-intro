@@ -21,7 +21,7 @@ class MoviesController < ApplicationController
     else
       @movies = Movie.all
     end
-    @all_ratings = ['G','PG','PG-13','R']
+    @all_ratings = Movie.distinct.pluck(:rating)
     if !@checked.nil?
      
       @movies = Movie.with_ratings(@checked.keys)
