@@ -14,11 +14,12 @@ class MoviesController < ApplicationController
    
     if params[:order] == "title"
       @movies = Movie.order(:title)
-    elsif params[:order_date] == "release_date"
+    elsif params[:order] == "release_date"
       @movies =  Movie.order(:release_date)
     else
       @movies = Movie.all
     end
+    @all_ratings = ['G','PG','PG-13','R']
   end
 
   def new
