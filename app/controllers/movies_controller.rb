@@ -12,6 +12,8 @@ class MoviesController < ApplicationController
 
   def index
     
+    @checked = params[:ratings]
+    
     if params[:order] == "title"
       @movies = Movie.order(:title)
     elsif params[:order] == "release_date"
@@ -20,9 +22,10 @@ class MoviesController < ApplicationController
       @movies = Movie.all
     end
     @all_ratings = ['G','PG','PG-13','R']
-    @checked = params[:ratings]
-    
-    puts(@checked.keys)
+    if !@checked.nil?
+     
+      @movies = Movie.with_ratings(@checked.keys)
+    end
   end
 
   def new
