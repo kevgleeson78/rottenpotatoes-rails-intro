@@ -11,21 +11,28 @@ class MoviesController < ApplicationController
   end
 
   def index
-    
+    @all_ratings = Movie.distinct.pluck(:rating)
     @checked = params[:ratings]
-    
+    @keep = {}
+    @switch = ''
     if params[:order] == "title"
+      @switch = "hilite"
       @movies = Movie.order(:title)
     elsif params[:order] == "release_date"
+      @switch = "hilite"
       @movies =  Movie.order(:release_date)
     else
       @movies = Movie.all
     end
-    @all_ratings = Movie.distinct.pluck(:rating)
+    
     if !@checked.nil?
-     
+      @keep = @checked
       @movies = Movie.with_ratings(@checked.keys)
+    else
+       @keep = @all_ratings
     end
+    
+ 
   end
 
   def new
