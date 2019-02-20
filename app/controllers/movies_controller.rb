@@ -14,13 +14,12 @@ class MoviesController < ApplicationController
     @all_ratings = Movie.distinct.pluck(:rating)
     @checked = params[:ratings]
     @keep = {}
-    @switch_title = "hilite" if params[:order] == 'title'
-    @switch_date = "hilite" if params[:order] == 'release_date'
+   
     if params[:order] == "title"
-      
+      @switch_title = "hilite"
       @movies = Movie.order(:title)
     elsif params[:order] == "release_date"
-      
+      @switch_date = "hilite" 
       @movies =  Movie.order(:release_date)
     else
       @movies = Movie.all
