@@ -12,28 +12,26 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.distinct.pluck(:rating)
-    @checked = params[:ratings]  || session[:ratings]
+    @checked = params[:ratings]
     @keep = {}
-    order = params[:order] || session[:order]
-    puts('test', order)
+    @movies = Movie.all
+    if !@checked.nil?
+        @keep = @checked
+       @movies = Movie.with_ratings(@checked.keys)
+    else
+       @keep = @all_ratings
+    end
     if params[:order] == "title"
       @switch_title = "hilite"
       @movies = Movie.order(:title)
     elsif params[:order] == "release_date"
       @switch_date = "hilite" 
       @movies =  Movie.order(:release_date)
-    else
-      @movies = Movie.all
+   
+      
     end
-     
     
     
-    if !@checked.nil?
-      @keep = @checked
-      @movies = Movie.with_ratings(@checked.keys)
-    else
-       @keep = @all_ratings
-    end
     
  
   end
