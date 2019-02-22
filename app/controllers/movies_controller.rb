@@ -29,13 +29,15 @@ class MoviesController < ApplicationController
   if !params[:ratings].nil?
     session[:ratings] = params[:ratings]
     @ratings = session[:ratings].keys
-  elsif
-     !params[:ratings].nil?
-      @ratings = @all_ratings
-      
     else
-      @ratings = @all_ratings
-      
+      if !params[:ratings].nil?
+        @ratings = @all_ratings
+        elsif session[:ratings]
+          flash.keep
+          redirect_to movies_path(order: session[:order], ratings: session[:ratings])
+      else
+        @ratings = @all_ratings
+      end
   end
 
   @movies = Movie.order(session[:order]).where(:rating => @ratings)
