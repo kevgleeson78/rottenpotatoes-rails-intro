@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
   
   if !params[:ratings].nil?
     session[:ratings] = params[:ratings]
-    @ratings = session[:ratings].keys
+    @ratings = session[:ratings]
     else
       if !params[:ratings].nil?
         @ratings = @all_ratings
@@ -39,7 +39,7 @@ class MoviesController < ApplicationController
         @ratings = @all_ratings
       end
   end
-
+  @selected_ratings = (params[:ratings].present? ? params[:ratings] : [])
   @movies = Movie.order(session[:order]).where(:rating => @ratings)
 
    
