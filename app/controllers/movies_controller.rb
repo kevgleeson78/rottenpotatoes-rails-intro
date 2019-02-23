@@ -39,9 +39,9 @@ class MoviesController < ApplicationController
         @ratings = @all_ratings
       end
   end
-  @selected_ratings = (params[:ratings].present? ? params[:ratings] : [])
+ 
   @movies = Movie.order(session[:order]).where(:rating => @ratings)
-
+  @selected_ratings = (params[:ratings].present? ? params[:ratings] : [])
    
     
     
